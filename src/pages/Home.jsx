@@ -8,9 +8,11 @@ import { FaInstagram } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 
 export default function Home() {
+  const [heroLoaded, setHeroLoaded] = React.useState(false);
+
   return (
     <div className="mt-20" id="home">
-      <div className="flex justify-between py-10 items-center px-5 lg:px-28 lg:flex-row flex-col-reverse gap-8 lg:gap-12">
+      <div className="flex justify-between py-10 items-center px-5 lg:px-28 lg:flex-row flex-col-reverse gap-12 lg:gap-20">
 
         <motion.div
           className="lg:w-[45%]"
@@ -93,16 +95,22 @@ export default function Home() {
         </motion.div>
 
         <motion.div
-          className="lg:w-[55%] w-full flex justify-center lg:justify-end mt-6 lg:mt-0"
+          className="lg:w-[55%] w-full flex justify-center lg:justify-end mt-6 lg:mt-0 overflow-visible"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeInOut" }}
         >
-          <img
-            className="w-full max-w-[520px] lg:max-w-[620px] h-auto object-contain"
-            src="/assets/hero-vector.jpg"
-            alt="Hero Vector"
-          />
+          <div className="relative w-full max-w-[520px] lg:max-w-[620px]">
+            {!heroLoaded && (
+              <div className="absolute inset-0 rounded-xl bg-neutral-200 animate-pulse" />
+            )}
+            <img
+              className={`block w-full h-auto object-contain object-center transition-opacity duration-500 ${heroLoaded ? "opacity-100" : "opacity-0"}`}
+              src="/assets/hero-vector.jpg"
+              alt="Hero Vector"
+              onLoad={() => setHeroLoaded(true)}
+            />
+          </div>
         </motion.div>
       </div>
     </div>
